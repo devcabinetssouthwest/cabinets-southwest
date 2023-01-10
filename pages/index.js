@@ -36,7 +36,7 @@ export default function Home() {
       <div className='mt-5'>
         <h2 className='text-center'>Contact Us</h2>
 
-      <form>
+      {/* <form>
         <div className="row g-3 mx-auto col col-md-6 mx-auto">
             <div className="col-12">
               <label className="form-label">First name</label>
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
 
           </div>
-      </form>
+      </form> */}
 
       <div className='col col-md-6 mx-auto my-5'>
         <p>

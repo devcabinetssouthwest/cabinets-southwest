@@ -34,10 +34,16 @@ export default function Home() {
       </div>
 
       <div className='mt-5'>
-        <h2 className='text-center'>Catalog</h2>
+        
 
         <div className='mb-5'>
-          <embed src = "/catalog.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+          <h2 className='text-center'>Catalog</h2>  
+          <embed src = "/Catalog.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+        </div>
+
+        <div className='mb-5'>
+          <h2 className='text-center'>Styles &#038; Colors</h2>  
+          <embed src = "/Styles And Colors.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
         </div>
 
         <h2 className='text-center'>Contact Us</h2>

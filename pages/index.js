@@ -34,6 +34,12 @@ export default function Home() {
       </div>
 
       <div className='mt-5'>
+        <h2 className='text-center'>Catalog</h2>
+
+        <div className='mb-5'>
+          <embed src = "/catalog.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+        </div>
+
         <h2 className='text-center'>Contact Us</h2>
 
       {/* <form>

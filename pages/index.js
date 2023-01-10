@@ -38,7 +38,7 @@ export default function Home() {
 
         <div className='mb-5'>
           <h2 className='text-center'>Catalog</h2>  
-          <embed src = "/Catalog.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+          <embed src = "/Catalog 2023.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
         </div>
 
         <div className='mb-5'>

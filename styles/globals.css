@@ -24,3 +24,22 @@ body {
   
     text-align: center;
 }
+
+/* .pdf-viewer{
+  height: 800px;
+} */
+
+.react-pdf__Page {
+  /* visibility: hidden; */
+  height: 800px;
+}
+
+ .pdf-loaded .react-pdf__Page {
+  visibility:visible;
+  height: 800px;
+
+}
+
+canvas{
+  background-color: red !important;
+}

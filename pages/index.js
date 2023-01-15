@@ -4,10 +4,21 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Footer from '../components/Footer'
+import PdfLoader from '../components/PdfLoader'
+import { useState } from 'react'
+import useMediaQuery from '../components/util/useMediaQuery'
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
+  const [showDownload1, setShowDownload1] = useState(false)
+  const [showDownload2, setShowDownload2] = useState(false)
+  const [showPdf, setShowPdf] = useState(1)
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  
+  const debug = true
+
   return (
     <>
       <Head>
@@ -25,64 +36,101 @@ export default function Home() {
           fill 
         />  
       </div>
-      <div id="comingSoonHero" className='d-flex flex-column'>
-        <div className='flex-grow-1 align-self-center d-flex px-lg-5'>
-          <h2 className='align-self-center bg-light p-2 '>Website Coming Soon</h2>
-        </div>
-        
-       
+     
+      <hr/>
+
+      isMobile = {JSON.stringify(isMobile)}
+
+      <div className='mb-5 d-flex flex-column justify-content-center text-center'>
+        <h2>About Us</h2>
+        <p className='fs-3 col-lg-8 col mx-auto'>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo maximus ante quis tempor. Sed nec fringilla lorem. Sed tincidunt nibh nec ultrices gravida. Etiam non nisi est. Mauris at risus fringilla, vehicula enim fermentum, pharetra arcu. Nullam sagittis arcu sit amet libero malesuada, pretium volutpat sem aliquet. Aliquam id nunc magna.
+
+        </p>
       </div>
+
+      <hr/>
 
       <div className='mt-5'>
         
 
-        <div className='mb-5'>
-          <h2 className='text-center'>Catalog</h2>  
-          <embed src = "/Catalog 2023.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+
+
+        <div class="btn-group btn-group-lg mx-auto" >
+          <button 
+            class="btn btn-outline-primary btn-primary text-light" 
+            onClick={()=>setShowPdf(1)}
+          >
+          Styles And Colors
+          </button>
+          <button 
+            class="btn btn-outline-primary" 
+            onClick={()=>setShowPdf(2)}
+          >
+          2023 Catalog
+          </button>
+          
+
+          
         </div>
 
-        <div className='mb-5'>
-          <h2 className='text-center'>Styles &#038; Colors</h2>  
-          <embed src = "/Styles And Colors.pdf" type='application/pdf' style={{height:"100vh"}} width={"100%"} height = {"100vh"}/>
+        <div className='mb-5 d-flex flex-column justify-content-center text-center'>
+          <h2 className='text-center mb-3'>
+            {showPdf === 1?"Styles And Colors":"2023 Catalog"}
+          </h2>  
+          {/* <PdfLoader /> */}
+          <div className='w-100 mt-3'>
+                  {/* <iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100%",width:"100%"}}></iframe> */}
+
+            {
+              showPdf === 1?
+              <div 
+                onMouseEnter={()=>setShowDownload2(true)}
+                onMouseLeave={()=>setShowDownload2(false)}
+                className='position-relative w-100' 
+                // style={{cursor:"pointer"}}
+              >
+                {!debug &&<iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
+                {
+                  (showDownload2|| isMobile) &&
+                  <a 
+                  className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
+                  href='./Styles And Colors.pdf'
+                  download
+                  >Download</a>
+
+                }
+                {/* </div> */}
+              </div>
+              :
+              <div 
+                onMouseEnter={()=>setShowDownload1(true)}
+                onMouseLeave={()=>setShowDownload1(false)}
+                className='position-relative w-100' 
+                // style={{cursor:"pointer"}}
+              >
+                {!debug &&<iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
+                {
+                  (showDownload1|| isMobile) &&
+                  <a 
+                  className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
+                  href='./Catalog 2023.pdf'
+                  download
+                  >Download</a>
+
+                }
+                {/* </div> */}
+              </div>
+              
+            }
+            
+          </div>
+          
+          
+
         </div>
 
         <h2 className='text-center'>Contact Us</h2>
-
-      {/* <form>
-        <div className="row g-3 mx-auto col col-md-6 mx-auto">
-            <div className="col-12">
-              <label className="form-label">First name</label>
-              <input type="text" className="form-control" id="firstName" placeholder="" required/>
-              
-            </div>
-
-         
-
-            <div className="col-12">
-              <label className="form-label">Email <span className="text-muted">*</span></label>
-              <input type="email" className="form-control" id="email" />
-              
-            </div>
-
-            <div className="col-12">
-              <label className="form-label">Phone</label>
-              <input type="text" className="form-control" id="address" />
-             
-            </div>
-
-            <div className="col-12">
-              <label className="form-label">Message</label>
-              <textarea  type="text" className="form-control" id="message"/>
-            </div>
-
-            <div className="col-12 text-center">
-              <button  type="submit" className="btn btn-outline-dark rounded-0 px-4 py-3 text-uppercase">
-                Send
-              </button>
-            </div>
-
-          </div>
-      </form> */}
 
       <div className='col col-md-6 mx-auto my-5'>
         <p>

@@ -17,7 +17,7 @@ export default function Home() {
   const [showPdf, setShowPdf] = useState(1)
   const isMobile = useMediaQuery('(max-width: 768px)')
   
-  const debug = true
+  const debug = false
 
   return (
     <>

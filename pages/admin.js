@@ -31,11 +31,12 @@ export default function Home() {
      
       <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5' style={{minHeight:"100px"}}>
         <Image
-          src={'/swc_logo_final_color.webp'}
-          alt="logo"
-          objectFit={'contain'}
-          fill 
-        />  
+            src={'/swc_logo_final_color.webp'}
+            alt="logo"
+            objectFit={'contain'}
+            width = {256}
+            height = {100} 
+          />  
       </div>
      
       

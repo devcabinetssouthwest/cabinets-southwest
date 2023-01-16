@@ -1,22 +1,38 @@
 import Head from 'next/head'
 import Image from 'next/image'
-
+import Link from 'next/link'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Footer from '../components/Footer'
-import PdfLoader from '../components/PdfLoader'
-import { useState } from 'react'
-import useMediaQuery from '../components/util/useMediaQuery'
+import { useEffect, useState } from 'react'
+import Fade from 'react-reveal/Fade';
+import { useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {
-  const [showDownload1, setShowDownload1] = useState(false)
-  const [showDownload2, setShowDownload2] = useState(false)
+  const {data: session} = useSession()
   const [showPdf, setShowPdf] = useState(1)
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const [isAdminDevice, setAdminDevice] = useState(false)
+
+  useEffect(()=>{
+    const potentialAdmin = localStorage.getItem("potentialAdmin")
+    const admin = localStorage.getItem("admin")
+
+    if (potentialAdmin || admin){
+      setAdminDevice(true)
+    }
+  },[])
+
+  // const isMobile = useMediaQuery('(max-width: 768px)')
   
+  const login = () =>{
+    localStorage.removeItem("potentialAdmin")
+    signIn("auth0")
+  }
+ 
   const debug = false
 
   return (
@@ -28,58 +44,83 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container">
-      <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5' style={{minHeight:"100px"}}>
-        <Image
-          src={'/swc_logo_final_color.webp'}
-          alt="logo"
-          objectFit={'contain'}
-          fill 
-        />  
-      </div>
-     
-      <hr/>
+      
 
-      isMobile = {JSON.stringify(isMobile)}
-
-      <div className='mb-5 d-flex flex-column justify-content-center text-center'>
-        <h2>About Us</h2>
-        <p className='fs-3 col-lg-8 col mx-auto'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo maximus ante quis tempor. Sed nec fringilla lorem. Sed tincidunt nibh nec ultrices gravida. Etiam non nisi est. Mauris at risus fringilla, vehicula enim fermentum, pharetra arcu. Nullam sagittis arcu sit amet libero malesuada, pretium volutpat sem aliquet. Aliquam id nunc magna.
-
-        </p>
-      </div>
-
-      <hr/>
-
-      <div className='mt-5'>
+      {
+        session?
+        <div className='position-absolute top-0 end-0 me-3 mt-3'>
+          <Link className='btn btn-dark' href={'/admin'}>Admin Page</Link>
+        </div>
+        :
+        <>
+          {
+            isAdminDevice && <div className='position-absolute top-0 end-0 me-3 mt-3'>
+            <button className='btn btn-dark' onClick={()=>login()}>Sign In</button>
+          </div>
+          }
+        </>
         
+      }
+      
+
+      
+
+      <Fade big>
+        <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5 text-center' style={{minHeight:"100px"}}>
+          <Image
+            src={'/swc_logo_final_color.webp'}
+            alt="logo"
+            objectFit={'contain'}
+            width = {256}
+            height = {100} 
+          />  
+        </div>
+      </Fade>
+     
+      <Fade>
+        <hr/>
+      </Fade>
+      
+      <Fade>
+        <div className='mb-5 d-flex flex-column justify-content-center text-center'>
+          <h2>About Us</h2>
+          <p className='fs-3 col-lg-8 col mx-auto'>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo maximus ante quis tempor. Sed nec fringilla lorem. Sed tincidunt nibh nec ultrices gravida. Etiam non nisi est. Mauris at risus fringilla, vehicula enim fermentum, pharetra arcu. Nullam sagittis arcu sit amet libero malesuada, pretium volutpat sem aliquet. Aliquam id nunc magna.
+
+          </p>
+        </div>
+      </Fade>
+      
+
+      <Fade>
+        <hr/>
+      </Fade>
+      
 
 
+      <div className='mt-3'>
+        <Fade>
+        <h2 className='text-center mb-3'>Documents</h2>
 
-        <div class="btn-group btn-group-lg mx-auto" >
+        <div className="w-100 text-center mb-1" >
           <button 
-            class="btn btn-outline-primary btn-primary text-light" 
+            className={"btn rounded-0 rounded-start btn-outline-dark"+(showPdf===1?" btn-dark text-light":"")}
             onClick={()=>setShowPdf(1)}
           >
           Styles And Colors
           </button>
           <button 
-            class="btn btn-outline-primary" 
+            className={"btn rounded-0 rounded-end btn-outline-dark"+(showPdf===2?" btn-dark text-light":"")}
             onClick={()=>setShowPdf(2)}
           >
           2023 Catalog
-          </button>
-          
-
-          
+          </button>          
         </div>
 
         <div className='mb-5 d-flex flex-column justify-content-center text-center'>
-          <h2 className='text-center mb-3'>
-            {showPdf === 1?"Styles And Colors":"2023 Catalog"}
-          </h2>  
+         
           {/* <PdfLoader /> */}
-          <div className='w-100 mt-3'>
+          <div className='w-100'>
                   {/* <iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100%",width:"100%"}}></iframe> */}
 
             {
@@ -87,12 +128,12 @@ export default function Home() {
               <div 
                 onMouseEnter={()=>setShowDownload2(true)}
                 onMouseLeave={()=>setShowDownload2(false)}
-                className='position-relative w-100' 
+                className='position-relative col-lg-8 col mx-auto' 
                 // style={{cursor:"pointer"}}
               >
-                {!debug &&<iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
+                {!debug &&<iframe className='border rounded-5 border-dark '  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
                 {
-                  (showDownload2|| isMobile) &&
+                  (true) &&
                   <a 
                   className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
                   href='./Styles And Colors.pdf'
@@ -106,12 +147,12 @@ export default function Home() {
               <div 
                 onMouseEnter={()=>setShowDownload1(true)}
                 onMouseLeave={()=>setShowDownload1(false)}
-                className='position-relative w-100' 
+                className='position-relative col-lg-8 col mx-auto' 
                 // style={{cursor:"pointer"}}
               >
                 {!debug &&<iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
                 {
-                  (showDownload1|| isMobile) &&
+                  (true) &&
                   <a 
                   className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
                   href='./Catalog 2023.pdf'
@@ -130,16 +171,26 @@ export default function Home() {
 
         </div>
 
+        </Fade>
+
+        <Fade>
+        <hr/>
+        </Fade>
+        
+
+        <Fade>
         <h2 className='text-center'>Contact Us</h2>
 
-      <div className='col col-md-6 mx-auto my-5'>
-        <p>
-          Feel free to reach out to Jeff Norman directly at jnorman@cabinetssouthwest.com or call  (480) 226-8157
-        </p>
-      </div>
+        <div className='col col-md-6 mx-auto my-5'>
+          <p>
+            Feel free to reach out to Jeff Norman directly at jnorman@cabinetssouthwest.com or call  (480) 226-8157
+          </p>
+        </div>
+        </Fade>
 
       <Footer/>
       </div>
+
       
      
       </main>

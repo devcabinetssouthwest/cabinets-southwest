@@ -81,10 +81,29 @@ export default function Home() {
       
       
       
-        <div className='mb-5 d-flex flex-column justify-content-center text-center'>
-          <h2>About Us</h2>
+        <div className='mb-5 d-flex flex-column justify-content-center'>
+          <h2 className='text-center'>About Us</h2>
           <p className='fs-3 col-lg-8 col mx-auto'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo maximus ante quis tempor. Sed nec fringilla lorem. Sed tincidunt nibh nec ultrices gravida. Etiam non nisi est. Mauris at risus fringilla, vehicula enim fermentum, pharetra arcu. Nullam sagittis arcu sit amet libero malesuada, pretium volutpat sem aliquet. Aliquam id nunc magna.
+          Cabinets Southwest is a full-service supplier of high-value fully-featured cabinetry.  We are very proud of our products and wanted to share with you some of our product features
+          </p>
+          <ul className='col-lg-6 mx-auto col fs-4'>
+            <li> All plywood construction</li>
+            <li> 5/8” hardwood / dovetail drawer boxes</li>
+            <li> Undermount / Full-Extension / Soft-close drawer guides</li>
+            <li> Full-Overlay Fronts</li>
+            <li> 5-Piece Drawer Fronts</li>
+            <li> Soft-close hinges</li>
+            <li> ¾” Plywood shelves</li>
+            <li> 24 on trend styles and colors</li>
+            <li> 2 week lead times</li>
+            <li> Sherwin-Williams custom color program</li>
+          </ul>
+
+<p className='fs-3 col-lg-8 col mx-auto mb-0'>
+In addition to our fantastic products, we offer a full service lineup including design, renderings, order entry and job site delivery!
+
+
+We would love to earn your business!  If there is anything that we can do for you, please let us know.
 
           </p>
         </div>
@@ -178,9 +197,9 @@ export default function Home() {
         
         <h2 className='text-center'>Contact Us</h2>
 
-        <div className='col col-md-6 mx-auto my-5'>
-          <p>
-            Feel free to reach out to Jeff Norman directly at jnorman@cabinetssouthwest.com or call  (480) 226-8157
+        <div className='col col-lg-8 mx-auto'>
+          <p className='fs-3 mx-auto mb-0'>
+            Feel free to reach out to Jeff Norman directly at jnorman@&#8203;cabinetssouthwest.com or call  <span className='text-nowrap'>(480) 226-8157</span>
           </p>
         </div>
         

@@ -65,7 +65,7 @@ export default function Home() {
 
       
 
-      <Fade big>
+      
         <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5 text-center' style={{minHeight:"100px"}}>
           <Image
             src={'/swc_logo_final_color.webp'}
@@ -75,13 +75,13 @@ export default function Home() {
             height = {100} 
           />  
         </div>
-      </Fade>
-     
-      <Fade>
-        <hr/>
-      </Fade>
       
-      <Fade>
+     
+      
+        <hr/>
+      
+      
+      
         <div className='mb-5 d-flex flex-column justify-content-center text-center'>
           <h2>About Us</h2>
           <p className='fs-3 col-lg-8 col mx-auto'>
@@ -89,17 +89,17 @@ export default function Home() {
 
           </p>
         </div>
-      </Fade>
+      
       
 
-      <Fade>
+      
         <hr/>
-      </Fade>
+      
       
 
 
       <div className='mt-3'>
-        <Fade>
+        
         <h2 className='text-center mb-3'>Documents</h2>
 
         <div className="w-100 text-center mb-1" >
@@ -171,14 +171,14 @@ export default function Home() {
 
         </div>
 
-        </Fade>
-
-        <Fade>
-        <hr/>
-        </Fade>
         
 
-        <Fade>
+        
+        <hr/>
+        
+        
+
+        
         <h2 className='text-center'>Contact Us</h2>
 
         <div className='col col-md-6 mx-auto my-5'>
@@ -186,7 +186,7 @@ export default function Home() {
             Feel free to reach out to Jeff Norman directly at jnorman@cabinetssouthwest.com or call  (480) 226-8157
           </p>
         </div>
-        </Fade>
+        
 
       <Footer/>
       </div>

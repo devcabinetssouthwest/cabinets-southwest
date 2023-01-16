@@ -100,7 +100,7 @@ export default function Home() {
           </ul>
 
 <p className='fs-3 col-lg-8 col mx-auto mb-0'>
-In addition to our fantastic products, we offer a full service lineup including design, renderings, order entry and job site delivery!
+In addition to our fantastic products, we offer a full service lineup including design, renderings, order entry, job site delivery, assembly and installation!
 
 
 We would love to earn your business!  If there is anything that we can do for you, please let us know.

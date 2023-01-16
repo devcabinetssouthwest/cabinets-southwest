@@ -5,7 +5,6 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
-import Fade from 'react-reveal/Fade';
 import { useSession } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
 

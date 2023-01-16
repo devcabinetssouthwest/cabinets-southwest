@@ -5,17 +5,18 @@ import { Inter } from '@next/font/google'
 import Footer from '../components/Footer'
 import { useState } from 'react'
 import ProtectedPage from '../components/util/ProtectedPage'
-
+import { signOut } from 'next-auth/react'
 const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {
-  const [showDownload1, setShowDownload1] = useState(false)
-  const [showDownload2, setShowDownload2] = useState(false)
-  const [showPdf, setShowPdf] = useState(1)
-  // const isMobile = useMediaQuery('(max-width: 768px)')
   
-  const debug = false
+  const logOut = () =>{
+    localStorage.removeItem("admin")
+    localStorage.removeItem("potentialAdmin")
+
+    signOut({callbackUrl:"/"})
+  }
 
   return (
     <ProtectedPage>
@@ -41,10 +42,17 @@ export default function Home() {
 
       <div className='mb-5 d-flex flex-column justify-content-center text-center'>
         <h2>Admin Page</h2>
-       
+
+        <div className='border rounded-3 d-flex justify-content-center align-items-center mt-3 bg-secondary text-light' style={{minHeight:400}}>
+
+            <h3>Admin Graphs and Stuff</h3>
+        </div>
+        <button className='btn btn-lg btn-dark mx-auto mt-3 px-5' onClick={logOut}>Log Out</button>
+
       </div>
       <hr/>
 
+        <Footer/>
       </main>
     </ProtectedPage>
   )

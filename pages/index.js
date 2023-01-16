@@ -125,8 +125,7 @@ export default function Home() {
             {
               showPdf === 1?
               <div 
-                onMouseEnter={()=>setShowDownload2(true)}
-                onMouseLeave={()=>setShowDownload2(false)}
+                
                 className='position-relative col-lg-8 col mx-auto' 
                 // style={{cursor:"pointer"}}
               >
@@ -144,8 +143,7 @@ export default function Home() {
               </div>
               :
               <div 
-                onMouseEnter={()=>setShowDownload1(true)}
-                onMouseLeave={()=>setShowDownload1(false)}
+                
                 className='position-relative col-lg-8 col mx-auto' 
                 // style={{cursor:"pointer"}}
               >

@@ -84,7 +84,7 @@ export default function Home() {
         <div className='mb-5 d-flex flex-column justify-content-center'>
           <h2 className='text-center'>About Us</h2>
           <p className='fs-3 col-lg-8 col mx-auto'>
-          Cabinets Southwest is a full-service supplier of high-value fully-featured cabinetry.  We are very proud of our products and wanted to share with you some of our product features
+          Cabinets Southwest is a full-service supplier of high-value fully-featured cabinetry.  We are very proud of our products and wanted to share with you some of our product features:
           </p>
           <ul className='col-lg-6 mx-auto col fs-4'>
             <li> All plywood construction</li>

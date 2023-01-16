@@ -10,7 +10,7 @@ export default function ProtectedPage(props:any) {
     useEffect(()=>{
         if(status !== "loading"){
             if (!session) {
-                localStorage.setItem("potentialAdmin", true)
+                localStorage.setItem("potentialAdmin", "true")
 
                 console.log("No session")
                 // maybe go to login page

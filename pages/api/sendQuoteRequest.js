@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     const mailOptions = {
         from: 'devcabinetssouthwest@gmail.com',
-        to: 'jado66@gmail.com',
+        to: 'jnorman@cabinetssouthwest.com',
         subject: `New Quote Request from ${quoteReq.name} at ${quoteReq.email}`,
         html: emailText,
         // attachments: attachments

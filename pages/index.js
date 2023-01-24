@@ -10,11 +10,84 @@ import { signIn } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const FILE_SIZE_LIMIT = 20
 
 export default function Home() {
   const {data: session} = useSession()
+
+  const [quoteReq, setQuoteReq] = useState({
+    email: "",
+    name: "",
+    number: "",
+    message: "",
+  })
+  const [selectedFile, setSelectedFile] = useState();
+
   const [showPdf, setShowPdf] = useState(1)
   const [isAdminDevice, setAdminDevice] = useState(false)
+
+  const sendMail = async () => {
+
+    // if (!validateFileSize()){
+    //   alert("File cannot be larger than 5 MB.")
+    //   return
+    // }
+    // Fetch email.js api and send quoteReq as part of body
+
+    const response = await fetch('/api/sendQuoteRequest', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        { 
+          quoteReq: quoteReq,
+        }
+      ),
+      files:[selectedFile]
+    });
+    const data = await response.json();
+  
+    alert("Quote Sent. Please allow 2-3 business days for us to get back to you!")
+
+  }
+
+  const handleFileChange = (event) => {
+
+    if(event.target.files.length > 0){
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+
+  const validateFileSize = () =>{
+    if (!selectedFile) {
+      
+      return
+    }
+
+    const fileSize = Math.floor(selectedFile.size / 1048576)
+
+    alert(`File size = ${fileSize} MB`)
+
+    if(fileSize > FILE_SIZE_LIMIT-1){
+
+      // Send to big toast
+      return false
+    }
+    return true
+  }
+
+  const handleQuoteChange = (key, value) => {
+    setQuoteReq(prev => {
+      return (
+        {
+          ...prev,
+          [key]: value
+        }
+      )
+    })
+  }
 
   useEffect(()=>{
     const potentialAdmin = localStorage.getItem("potentialAdmin")
@@ -31,8 +104,6 @@ export default function Home() {
     localStorage.removeItem("potentialAdmin")
     signIn("auth0")
   }
- 
-  const debug = false
 
   return (
     <>
@@ -44,26 +115,21 @@ export default function Home() {
       </Head>
       <main className="container">
       
-
-      {
-        session?
-        <div className='position-absolute top-0 end-0 me-3 mt-3'>
-          <Link className='btn btn-dark' href={'/admin'}>Admin Page</Link>
-        </div>
-        :
-        <>
-          {
-            isAdminDevice && <div className='position-absolute top-0 end-0 me-3 mt-3'>
-            <button className='btn btn-dark' onClick={()=>login()}>Sign In</button>
+        {
+          session?
+          <div className='position-absolute top-0 end-0 me-3 mt-3'>
+            <Link className='btn btn-dark' href={'/admin'}>Admin Page</Link>
           </div>
-          }
-        </>
-        
-      }
-      
-
-      
-
+          :
+          <>
+            {
+              isAdminDevice && <div className='position-absolute top-0 end-0 me-3 mt-3'>
+              <button className='btn btn-dark' onClick={()=>login()}>Sign In</button>
+            </div>
+            }
+          </>
+          
+        }
       
         <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5 text-center' style={{minHeight:"100px"}}>
           <Image
@@ -75,11 +141,7 @@ export default function Home() {
           />  
         </div>
       
-     
-      
         <hr/>
-      
-      
       
         <div className='mb-5 d-flex flex-column justify-content-center'>
           <h2 className='text-center'>About Us</h2>
@@ -99,23 +161,16 @@ export default function Home() {
             <li> Sherwin-Williams custom color program</li>
           </ul>
 
-<p className='fs-3 col-lg-8 col mx-auto mb-0'>
-In addition to our fantastic products, we offer a full service lineup including design, renderings, order entry, job site delivery, assembly and installation!
+          <p className='fs-3 col-lg-8 col mx-auto mb-0'>
+            In addition to our fantastic products, we offer a full service lineup including design, renderings, order entry, job site delivery, assembly and installation!
 
-
-We would love to earn your business!  If there is anything that we can do for you, please let us know.
+            We would love to earn your business!  If there is anything that we can do for you, please let us know.
 
           </p>
         </div>
       
-      
-
-      
         <hr/>
       
-      
-
-
       <div className='mt-3'>
         
         <h2 className='text-center mb-3'>Documents</h2>
@@ -125,13 +180,13 @@ We would love to earn your business!  If there is anything that we can do for yo
             className={"btn rounded-0 rounded-start btn-outline-dark"+(showPdf===1?" btn-dark text-light":"")}
             onClick={()=>setShowPdf(1)}
           >
-          Styles And Colors
+            Styles And Colors
           </button>
           <button 
             className={"btn rounded-0 rounded-end btn-outline-dark"+(showPdf===2?" btn-dark text-light":"")}
             onClick={()=>setShowPdf(2)}
           >
-          2023 Catalog
+            2023 Catalog
           </button>          
         </div>
 
@@ -139,62 +194,114 @@ We would love to earn your business!  If there is anything that we can do for yo
          
           {/* <PdfLoader /> */}
           <div className='w-100'>
-                  {/* <iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100%",width:"100%"}}></iframe> */}
-
             {
               showPdf === 1?
-              <div 
-                
+              <div                 
                 className='position-relative col-lg-8 col mx-auto' 
-                // style={{cursor:"pointer"}}
               >
-                {!debug &&<iframe className='border rounded-5 border-dark '  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
+                <iframe className='border rounded-5 border-dark '  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>
                 {
                   (true) &&
                   <a 
-                  className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
-                  href='./Styles And Colors.pdf'
-                  download
-                  >Download</a>
-
+                    className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
+                    href='./Styles And Colors.pdf'
+                    download
+                  >
+                    Download
+                  </a>
                 }
-                {/* </div> */}
               </div>
               :
               <div 
-                
                 className='position-relative col-lg-8 col mx-auto' 
-                // style={{cursor:"pointer"}}
               >
-                {!debug &&<iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100vh",width:"100%"}} ></iframe>}
+                <iframe className='border rounded-5 border-dark'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100vh",width:"100%"}} ></iframe>
+
                 {
                   (true) &&
                   <a 
-                  className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
-                  href='./Catalog 2023.pdf'
-                  download
-                  >Download</a>
-
+                    className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark'
+                    href='./Catalog 2023.pdf'
+                    download
+                  >
+                    Download
+                  </a>
                 }
-                {/* </div> */}
-              </div>
-              
+              </div>              
             }
-            
           </div>
-          
-          
-
         </div>
 
-        
-
-        
         <hr/>
-        
-        
 
-        
+        <h2 className='text-center mb-3'>Request A Quote</h2>
+
+        <div className='col col-lg-8 mx-auto col col-lg-8 mx-auto d-flex flex-column'>
+
+          <span className='text-center mb-3'>Fill out this form to request a quote from us:</span>
+
+          <div className=' border p-3 rounded-3 bg-light d-flex flex-column'>
+            <div className="mb-3">
+              <label className="form-label">Name *</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="John Doe"
+                value={quoteReq.name}
+                onChange={(evt)=>handleQuoteChange("name",evt.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Email address *</label>
+              <input 
+                type="email" 
+                className="form-control" 
+                placeholder="jdoe@email.com"
+                value={quoteReq.email}
+                onChange={(evt)=>handleQuoteChange("email",evt.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Number</label>
+              <input 
+                type="phone" 
+                className="form-control" 
+                placeholder="123-456-7890"
+                value={quoteReq.number}
+                onChange={(evt)=>handleQuoteChange("number",evt.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label >Description</label>
+              <textarea 
+                className="form-control" 
+                rows="3" 
+                placeholder='I need a quote for a ...'
+                value={quoteReq.messege}
+                onChange={(evt)=>handleQuoteChange("messege",evt.target.value)}
+              >
+              </textarea>
+            </div>
+
+            {/* {
+              selectedFile && JSON.stringify({name:selectedFile.name,size:selectedFile.size})
+            }
+            <div className="mb-3">
+              <label className="form-label">Attachments</label>
+              <input
+                className="form-control" 
+                type="file"
+                // value={quoteReq.attachment?quoteReq.attachment.name:""} 
+                onChange={handleFileChange}
+              />
+            </div> */}
+            <button className='btn btn-dark col-lg-6 col mx-auto' onClick={sendMail}>Send</button>
+
+          </div>
+        </div>
+
+        <hr/>
+
         <h2 className='text-center'>Contact Us</h2>
 
         <div className='col col-lg-8 mx-auto'>
@@ -203,13 +310,10 @@ We would love to earn your business!  If there is anything that we can do for yo
           </p>
         </div>
         
-
-      <Footer/>
+        <Footer/>
       </div>
 
-      
-     
-      </main>
-    </>
+    </main>
+  </>
   )
 }

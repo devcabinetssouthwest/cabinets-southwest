@@ -7,10 +7,11 @@ import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
-
+import { toast, ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 const inter = Inter({ subsets: ['latin'] })
 
-const FILE_SIZE_LIMIT = 20
+const FILE_SIZE_LIMIT = 2
 
 export default function Home() {
   const {data: session} = useSession()
@@ -21,12 +22,34 @@ export default function Home() {
     number: "",
     message: "",
   })
-  const [selectedFile, setSelectedFile] = useState();
+
+  const [isError, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [fileNames, setFileNames] = useState([])
 
   const [showPdf, setShowPdf] = useState(1)
   const [isAdminDevice, setAdminDevice] = useState(false)
 
+  const toBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
   const sendMail = async () => {
+
+    let base64Images = []
+
+    for (var i = 0; i < selectedFiles.length; i++){
+      const newImageUrl = await toBase64(selectedFiles[i])
+      base64Images.push(newImageUrl)
+    }
+
+
+
 
     // if (!validateFileSize()){
     //   alert("File cannot be larger than 5 MB.")
@@ -41,34 +64,93 @@ export default function Home() {
       },
       body: JSON.stringify(
         { 
+          attachments:base64Images,
+          attachmentNames: fileNames,
           quoteReq: quoteReq,
         }
       ),
-      files:[selectedFile]
+      
     });
     const data = await response.json();
-  
-    alert("Quote Sent. Please allow 2-3 business days for us to get back to you!")
-
+    
+    toast.success('Your Quote has been sent. Please allow 2-3 business days for us to get back to you!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
   }
 
-  const handleFileChange = (event) => {
+  const handleFilesChange = (event) => {
 
-    if(event.target.files.length > 0){
-      setSelectedFile(event.target.files[0]);
+    if (event.target.files.length > 3){
+      event.preventDefault();
+      toast.error('You can upload up to 3 images.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      setErrorMsg(" - You can upload up to 3 images")
+      setError(true)
+      setFileNames([])
+      return
+    }
+
+    if (event.target.files.length > 0){
+
+      const files = [...event.target.files]
+
+      let filesAreSmall = true
+
+      files.forEach(file => {
+        if (!validateFileSize(file)){
+          filesAreSmall = false
+        }
+      });
+
+      if (filesAreSmall){
+        setSelectedFiles(files);
+        setFileNames(files.map(file=>file.name))
+        setError(false)
+
+      }
+      else{
+        event.preventDefault();
+        toast.error('Files must be smaller than 5 MB.', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        setErrorMsg(" - Files must be smaller than 5 MB")
+        setError(true)
+        setFileNames([])
+      }
+
     }
   };
 
 
-  const validateFileSize = () =>{
-    if (!selectedFile) {
+  const validateFileSize = (file) =>{
+    if (!file) {
       
       return
     }
 
-    const fileSize = Math.floor(selectedFile.size / 1048576)
-
-    alert(`File size = ${fileSize} MB`)
+    const fileSize = Math.floor(file.size / 1048576)
 
     if(fileSize > FILE_SIZE_LIMIT-1){
 
@@ -113,6 +195,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ToastContainer/>
       <main className="container">
       
         {
@@ -283,19 +366,24 @@ export default function Home() {
               </textarea>
             </div>
 
-            {/* {
-              selectedFile && JSON.stringify({name:selectedFile.name,size:selectedFile.size})
-            }
             <div className="mb-3">
-              <label className="form-label">Attachments</label>
+              <label className={"form-label "+(isError?"text-danger fw-bold":"")}>Attachments{isError?errorMsg:""}</label>
               <input
                 className="form-control" 
                 type="file"
-                // value={quoteReq.attachment?quoteReq.attachment.name:""} 
-                onChange={handleFileChange}
+                accept="image/*"
+                // value={fileNames.length>0?fileNames.toString():""} 
+                onChange={handleFilesChange}
+                multiple
               />
-            </div> */}
-            <button className='btn btn-dark col-lg-6 col mx-auto' onClick={sendMail}>Send</button>
+            </div>
+            <button 
+              className='btn btn-dark col-lg-6 col mx-auto' 
+              onClick={sendMail}
+              disabled = {isError}
+            >
+              Send
+            </button>
 
           </div>
         </div>

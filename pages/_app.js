@@ -12,17 +12,6 @@ function MyApp({ Component, pageProps,session }) {
 
   return (
     <>
-      <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-423TEM5SWD"/>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-423TEM5SWD');
-        `}
-      </Script>
-    
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>

@@ -5,6 +5,7 @@ import { SessionProvider, getSession } from 'next-auth/react'
 import App from 'next/app'
 import Script from 'next/script'
 import * as gtag from "../lib/gtag"
+import { GA_MEASUREMENT_ID } from '../lib/gtag'
 import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps,session }) {

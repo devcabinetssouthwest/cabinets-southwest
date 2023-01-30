@@ -29,7 +29,7 @@ export default function Home() {
       </Head>
       <main className="">
      
-      <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5' style={{minHeight:"100px"}}>
+      <div className='col col-md-6 mx-auto position-relative mb-5 mx-auto mt-5 text-center' style={{minHeight:"100px"}}>
         <Image
             src={'/swc_logo_final_color.webp'}
             alt="logo"

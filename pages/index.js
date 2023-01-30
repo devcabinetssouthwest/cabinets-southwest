@@ -235,7 +235,7 @@ export default function Home() {
       
         <Fade>
           <div className='mb-4 d-flex flex-column justify-content-center'>
-            <h2 className='text-center mt-3 h1'>About Us</h2>
+            <h2 className='text-center mt-2 h1'>About Us</h2>
             <p className='fs-3 col-lg-8 col mx-auto'>
             Cabinets Southwest is a full-service supplier of high-value fully-featured cabinetry.  We are very proud of our products and wanted to share with you some of our product features:
             </p>

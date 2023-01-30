@@ -42,14 +42,43 @@ export default function Home() {
       
       <Navbar/>
 
-<h2 className='text-center mt-4'>Admin Page</h2>
+      <h2 className='text-center mt-4'>Admin Page</h2>
         <div className='container'>
             <div className='mb-5 d-flex flex-column justify-content-center text-center'>
             
-            
-            <div className='border rounded-3 d-flex justify-content-center align-items-center mt-3 bg-secondary text-light' style={{minHeight:400}}>
+            <div className='border d-flex mt-3 flex-column col-lg-6 col-12 mx-auto bg-info'>
 
-                <h3 cla>Admin Graphs and Stuff</h3>
+                <h4 className='mt-4 mb-4'>Important Links</h4>
+                <div className='p-sm-5 p-2 bg-light '>
+                  <DescriptionLink
+                    description = "View your web traffic and other insights"
+                    linkText = "Google Analytics"
+                    href = "https://analytics.google.com/"
+                  />
+                  <hr/>
+                  <DescriptionLink
+                    description = "Modify your downloadable documents"
+                    linkText = "Google Docs"
+                    href = "https://docs.google.com/"
+                  />
+                  <hr/>
+                  <DescriptionLink
+                    description = "Modify the code (i.e. website text)"
+                    linkText = "GitHub"
+                    href = "https://github.com/"
+                  />
+                  <hr/>
+                  <DescriptionLink
+                    description = "Deploy New Site Changes"
+                    linkText = "Digital Oceans"
+                    href = "https://cloud.digitalocean.com/login"
+                  />
+
+                </div>
+
+                
+
+              
             </div>
 
         </div>
@@ -61,5 +90,14 @@ export default function Home() {
         <Footer/>
       </main>
     </ProtectedPage>
+  )
+}
+
+const DescriptionLink = (props) => {
+  return(
+    <div className={'flex-lg-row flex-column d-flex '+props.className}>
+      <a className='col-lg-5 col-12 btn btn-secondary d-flex justify-content-center align-items-center py-2' target = {"_blank"} href = {props.href}>{props.linkText}</a>
+      <p className='col-lg-7 col-12 ms-lg-3 mt-lg-0 mt-3 col-lg-8 mb-0 align-self-center text-lg-start text-center'>{props.description}</p>
+    </div>
   )
 }

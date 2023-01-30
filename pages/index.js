@@ -416,7 +416,7 @@ export default function Home() {
 
           <div className='col col-lg-8 mx-auto'>
             <p className='fs-3 mx-auto mb-0 text-center'>
-              Feel free to reach out to Jeff Norman directly at jnorman@&#8203;cabinetssouthwest.com or call  <span className='text-nowrap'>(480) 226-8157</span>
+              Feel free to reach out to Jeff Norman directly at <a href='mailto:jnorman@cabinetssouthwest.com' className='text-nowrap text-dark'>jnorman@cabinetssouthwest.com</a> or call <a href = "tel:1-480-226-8157" className='text-dark text-nowrap'>480-226-8157</a>.
             </p>
           </div>
         </Fade>

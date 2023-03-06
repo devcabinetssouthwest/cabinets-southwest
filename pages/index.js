@@ -269,18 +269,25 @@ export default function Home() {
       <div className='mt-3'>
         
         <Fade>
-          <h2 className='text-center mb-3 mt-4 h1'>Documents</h2>
+          <h2 className='text-center mb-3 mt-4 h1'>Design Documents</h2>
 
           <div className="w-100 text-center mb-1" >
             <button 
-              className={"btn rounded-0 rounded-start btn-outline-dark box-shadow "+(showPdf===1?" btn-dark text-light":"")}
+              className={"btn rounded-0 rounded-start btn-outline-dark box-shadow border-end-0 "+(showPdf===1?" btn-dark text-light":"")}
               onClick={()=>setShowPdf(1)}
             >
-              Styles And Colors
+              Frame Styles
             </button>
             <button 
-              className={"btn rounded-0 rounded-end btn-outline-dark box-shadow "+(showPdf===2?" btn-dark text-light":"")}
+              className={"btn rounded-0 btn-outline-dark box-shadow "+(showPdf===2?" btn-dark text-light":"")}
               onClick={()=>setShowPdf(2)}
+            >
+              
+              Euro Styles
+            </button>  
+            <button 
+              className={"btn rounded-0 rounded-end btn-outline-dark box-shadow border-start-0 "+(showPdf===3?" btn-dark text-light":"")}
+              onClick={()=>setShowPdf(3)}
             >
               2023 Catalog
             </button>          
@@ -290,29 +297,53 @@ export default function Home() {
           
             {/* <PdfLoader /> */}
             <div className='w-100'>
-              {
-                showPdf === 1?
-                <div                 
-                  className='position-relative col-lg-8 col mx-auto ' 
+              
+              { 
+                showPdf === 1 &&
+                
+                <div 
+                  className='position-relative col-lg-8 col mx-auto' 
                 >
-                  <iframe className='border rounded-5 border-dark box-shadow'  src="https://drive.google.com/file/d/1izMNwGY1u1sfx_g0pACdNpgArdbtQ2J7/preview" style={{height:"100vh",width:"100%"}} ></iframe>
+                  <iframe className='border rounded-5 border-dark box-shadow'  src="https://drive.google.com/file/d/1fNEmlAcBhMAdT6EM0ujsrjQimku3s9_F/preview" style={{height:"100vh",width:"100%"}} ></iframe>
+{/* 1fNEmlAcBhMAdT6EM0ujsrjQimku3s9_F */}
                   {
                     (true) &&
                     <a 
                       className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark box-shadow'
-                      href='./Styles And Colors.pdf'
+                      href='./CSW - Framed Styles and Colors.pdf'
+                      download
+                    >
+                      Download
+                    </a>
+                  }
+                </div>              
+              }
+              {
+                showPdf === 2 &&
+                <div                 
+                  className='position-relative col-lg-8 col mx-auto ' 
+                >
+                  <iframe className='border rounded-5 border-dark box-shadow'  src="https://drive.google.com/file/d/1Ns2g8AeFnR456qH8accofc8-Ui1uXZ1D/preview" style={{height:"100vh",width:"100%"}} ></iframe>
+                  {
+                    (true) &&
+                    <a 
+                      className='position-absolute bottom-0 end-0 me-4 mb-3 btn btn-dark box-shadow'
+                      href='./CSW - Euro Styles and Colors.pdf'
                       download
                     >
                       Download
                     </a>
                   }
                 </div>
-                :
+              }
+              { 
+                showPdf === 3 &&
+                
                 <div 
                   className='position-relative col-lg-8 col mx-auto' 
                 >
                   <iframe className='border rounded-5 border-dark box-shadow'  src="https://drive.google.com/file/d/1x5N3eXXvSQUezDbPKc8IeZv3_B2pzOo1/preview" style={{height:"100vh",width:"100%"}} ></iframe>
-
+{/*  */}
                   {
                     (true) &&
                     <a 
